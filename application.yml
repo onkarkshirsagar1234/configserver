@@ -1,8 +1,9 @@
-db.url: jdbc:mysql://cafeshop.c9ieusgg00xd.us-east-1.rds.amazonaws.com:3306/cafeShopDB
-db.username: cafeShop
-db.password: Etp12345
-db.driver: com.mysql.cj.jdbc.Driver
-db.dialect: org.hibernate.dialect.MySQL8Dialect
-db.hbm2ddl: update
-db.show_sql: true
-db.hibernate.current_session_context_class: org
+db:
+  url: jdbc:mysql://cafeshop.c9ieusgg00xd.us-east-1.rds.amazonaws.com:3306/cafeShopDB
+  username: cafeShop
+  password: Etp12345
+  driver: com.mysql.cj.jdbc.Driver
+  dialect: org.hibernate.dialect.MySQL8Dialect
+  hbm2ddl: update
+  show_sql: true
+
