@@ -5,4 +5,4 @@ db.driver: com.mysql.cj.jdbc.Driver
 db.dialect: org.hibernate.dialect.MySQL8Dialect
 db.hbm2ddl: update
 db.show_sql: true
-db.hibernate.current_session_context_class: org.hibernate.context.internal.ThreadLocalSessionContext
+db.hibernate.current_session_context_class: org
