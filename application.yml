@@ -1,3 +1,13 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:7591/eureka
+
+
 db:
   url: jdbc:mysql://cafeshop.c9ieusgg00xd.us-east-1.rds.amazonaws.com:3306/cafeShopDB
   username: cafeShop
