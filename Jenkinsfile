@@ -30,7 +30,7 @@ pipeline {
                     def dockerImage = docker.build("${registry}:latest")
                     
                     // Print Docker image name
-                    echo "Docker image built: ${dockerImage.imageName}"
+                    echo "Docker image built Success"
                 }
             }
         }
