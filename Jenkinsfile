@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1'
         ECR_REPO_NAME = 'config-server'
-        AWS_ACCOUNT_ID = '339712936703'
+        AWS_ACCOUNT_ID = '339712936703' 
         registry = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}"
     }
     stages {
