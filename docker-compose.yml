@@ -4,5 +4,6 @@ services:
   java-app:
     build:
     container_name: java-app
+    image: public.ecr.aws/ubuntu/ubuntu:22.04_stable
     ports:
       - "8081:8081"  # Map the container's port to the host (adjust as needed)
