@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+    environment {
+        AWS_REGION = 'ap-south-1'
+        ECR_REPO_NAME = 'config-server'
+        AWS_ACCOUNT_ID = '339712936703'
+        registry = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/gauravgorde/configserver.git']])
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                script {
+                    // Check AWS CLI version
+                    sh 'aws --version'
+                    
+                    // Print a message to indicate the Docker build process
+                    echo 'Building Docker Image...'
+                    
+                    // Build the Docker image
+                    def dockerImage = docker.build("${registry}:latest")
+                    
+                    // Print Docker image name
+                    echo "Docker image built: ${dockerImage.imageName}"
+                }
+            }
+        }
+        stage('Docker Image') {
+            steps {
+                script {
+                    // Login to AWS ECR
+                    sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${registry}'
+                    
+                    // Tag the Docker image
+                    sh "docker tag ${registry}:latest ${registry}:latest"
+                    
+                    // Push the Docker image to ECR
+                    sh "docker push ${registry}:latest"
+                    
+                    // Stop and remove any existing container with the name `configServer`
+                    sh 'docker ps -f name=configServer -q | xargs --no-run-if-empty docker container stop'
+                    sh 'docker container ls -a -f name=configServer -q | xargs --no-run-if-empty docker container rm'
+                }
+            }
+        }
+        stage('Docker Run') {
+            steps {
+                script {
+                    // Run the Docker container
+                    sh "docker run -d -p 8000:8000 --rm --name configServer ${registry}:latest"
+                }
+            }
+        }
+    }
+}
