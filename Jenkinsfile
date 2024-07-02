@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         AWS_REGION = 'ap-south-1'
-        ECR_REPO_NAME = 'config-server'
+        ECR_REPO_NAME = 'springapp'
         AWS_ACCOUNT_ID = '339712936703' 
         registry = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}"
     }
