@@ -74,5 +74,18 @@ pipeline {
                 }
             }
         }
+         stage('Docker Deploy') {
+            steps {
+                script {
+                    // Update the image in the docker-compose.yml file
+                    sh """
+                        sed -i 's|image:.*|image: ${IMAGE_NAME}|g' docker-compose.yml
+                    """
+                    
+                    // Deploy using Docker Compose
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
     }
 }
