@@ -85,6 +85,9 @@ pipeline {
                         echo "docker-compose.yml found at ${composeFilePath}"
                         
                         // Update the image in the docker-compose.yml file
+                        docker-compose -f /var/lib/jenkins/workspace/Springapp/docker-compose.yml config
+                        docker-compose -f /var/lib/jenkins/workspace/Springapp/docker-compose.yml down
+                        docker-compose -f /var/lib/jenkins/workspace/Springapp/docker-compose.yml up -d
                         sh """
                             sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${composeFilePath}
                         """
