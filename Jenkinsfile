@@ -5,6 +5,7 @@ pipeline {
         ECR_REPO_NAME = 'springapp'
         AWS_ACCOUNT_ID = '339712936703' 
         registry = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}"
+        IMAGE_NAME = 'your-ecr-repository-url/your-image:latest'
     }
     stages {
         stage('Checkout') {
@@ -57,6 +58,19 @@ pipeline {
                 script {
                     // Run the Docker container
                     sh "docker run -d -p 8000:8000 --rm --name configServer ${registry}:latest"
+                }
+            }
+        }
+        stage('Pull Docker Image'){
+             steps {
+                script {
+                    sh """
+                        # Login to Amazon ECR
+                        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${registry}
+                        
+                        # Pull the latest Docker image
+                        docker pull ${IMAGE_NAME}
+                    """
                 }
             }
         }
