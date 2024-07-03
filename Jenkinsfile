@@ -77,13 +77,23 @@ pipeline {
          stage('Docker Deploy') {
             steps {
                 script {
-                    // Update the image in the docker-compose.yml file
-                    sh """
-                        sed -i 's|image:.*|image: ${IMAGE_NAME}|g' docker-compose.yml
-                    """
+                    // Path to the docker-compose.yml file in the repository
+                    def composeFilePath = "${env.WORKSPACE}/docker-compose.yml"
                     
-                    // Deploy using Docker Compose
-                    sh 'docker-compose up -d'
+                    // Verify the docker-compose.yml file exists
+                    if (fileExists(composeFilePath)) {
+                        echo "docker-compose.yml found at ${composeFilePath}"
+                        
+                        // Update the image in the docker-compose.yml file
+                        sh """
+                            sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${composeFilePath}
+                        """
+                        
+                        // Deploy using Docker Compose
+                        sh "docker-compose -f ${composeFilePath} up -d"
+                    } else {
+                        error "docker-compose.yml not found at ${composeFilePath}"
+                    }
                 }
             }
         }
