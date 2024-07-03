@@ -1,9 +1,9 @@
 version: '3.8'
-
 services:
-  java-app:
-    build:
-    container_name: java-app
-    image: public.ecr.aws/ubuntu/ubuntu:22.04_stable
+  springapp:
+    image: 339712936703.dkr.ecr.ap-south-1.amazonaws.com/springapp:latest
     ports:
-      - "8081:8081"  # Map the container's port to the host (adjust as needed)
+      - "8081:8081"  # Adjust the ports as needed
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      # Add other environment variables if needed
