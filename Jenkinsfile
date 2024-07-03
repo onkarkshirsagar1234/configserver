@@ -5,7 +5,7 @@ pipeline {
         ECR_REPO_NAME = 'springapp'
         AWS_ACCOUNT_ID = '339712936703' 
         registry = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}"
-        IMAGE_NAME = 'your-ecr-repository-url/your-image:latest'
+        IMAGE_NAME = '339712936703.dkr.ecr.ap-south-1.amazonaws.com/springapp:latest'
     }
     stages {
         stage('Checkout') {
