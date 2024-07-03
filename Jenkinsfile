@@ -81,7 +81,7 @@ pipeline {
                     def composeFilePath = "${env.WORKSPACE}/docker-compose.yml"
                     
                     // Verify the docker-compose.yml file exists
-                    if (fileExists(composeFilePath)) {
+                    
                         echo "docker-compose.yml found at ${composeFilePath}"
                         
                         // Update the image in the docker-compose.yml file
@@ -91,9 +91,7 @@ pipeline {
                         
                         // Deploy using Docker Compose
                         sh "docker-compose -f ${composeFilePath} up -d"
-                    } else {
-                        error "docker-compose.yml not found at ${composeFilePath}"
-                    }
+                    
                 }
             }
         }
