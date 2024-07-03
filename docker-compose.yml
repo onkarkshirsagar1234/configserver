@@ -3,7 +3,7 @@ services:
   springapp:
     image: 339712936703.dkr.ecr.ap-south-1.amazonaws.com/springapp:latest
     ports:
-      - "8081:8081"  # Adjust the ports as needed
+      - "8000:8000"  # Adjust the ports as needed
     environment:
       - SPRING_PROFILES_ACTIVE=default
       # Add other environment variables if needed
